@@ -1,0 +1,42 @@
+1. Explain the importance of below 4 demons in job execution with minimum of 5 points
+? Name node
+? Data node
+? Resource Manager
+? Node manager
+Note: Forward the solutions for review 
+
+Name Node:
+1.)Name Node is the HDFS cluster operating as master.
+2.)It manage the filesystem tree and metadata for all the files and directories in the tree.
+3.)It manage the filesystem namespace .
+4.)This information is stored in the local disk in the form of two files 
+	i)Namespace image ii)Edit Logs
+5.)It also knows the DataNode on which all the block of given file located and does't know Block location.
+
+DataNode:
+1.)Data Node store and retrieve block when they are told by the client and also report back to name node periodically with list of block they are storing .
+2.)Data Node read block from disk but for frequent access of the block may be explicitly cached by the data node only one data node memory.
+3.)Data Node send block report to the name node because block mapping are stored in the name node memory not in the disk.
+4.)Input files split into block and store into datanode and data node are replicated accross multiple data nodes.
+5.)Data Node also send heart beats  to ensure that connectivity between data node and name node .
+When the heart beats no longer present name node upmap the data node for the cluster. 
+
+
+Resource Manager :
+1.)Resource Manager is the masters that aribitrates all the available cluster resources that helps to managing the distributed application running into the yarn system.
+2.)It works together with per node Node Manager and per application Application Manager .
+3.)Resourse Manager send instruction to the Node Manager and Node Manager manager resources available on single node .
+4.)Application Masterare responsible for negotiating resources with the ResourceManager and for working with the NodeManagers to start the containers.
+5.)ResourceManager is primarily limited to scheduling 
+i.e. Only arbitrating available resources in the system among the competing applications and not concerning itself with per-application state management. 
+Resourse Manager is able to address the most important design requirements – scalability, support for alternate programming paradigms.
+
+Node Manager:
+1.)Node Manager running nodes in the cluster to launch and moniter container .A container executes an application-specific process with a constrained set of resources
+(memory, CPU, and so on).
+2.)Node Manager could request more containers from the resource managers and use them to run a distributed computation.
+3.)It is equivelant to Task tracker in in MapReduce1.
+4.)Every node manager in a YARN cluster periodically sends a heartbeat request to the resource manager — by default, one per second. Heartbeats carry information about the
+node manager’s running containers and the resources available for new containers, 
+so each heartbeat is a potential scheduling opportunity for an application to run a container.
+5.)Node managers may be blacklisted if the number of failures for the application is high,even if the node manager itself has not failed.
