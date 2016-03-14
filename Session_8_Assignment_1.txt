@@ -1,0 +1,12 @@
+Write a wordcount program to implement wordcount using Pig.
+Ans.
+pig -x local to start pig .
+lines=Load 'sample_data' As (line:chararray) ; --To load data from sample file.
+words =foreach lines generate FLATTEN(TOKENIZE(line)) As word;
+Grp =GROUP words By word; --grouping 
+word_count =foreach Grp generate COUNT(words) As wc; --Expression
+
+Dump word_count; --To see the content .
+
+Store word_count into sample_output; --To save output 
+ 
