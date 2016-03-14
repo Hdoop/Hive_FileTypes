@@ -1,0 +1,49 @@
+5. Problem Statement
+Give a brief answers to the questions below:
+1. Why Map-reduce program is needed in Pig Programming?
+2. What are advantages of pig over MapReduce?
+3. What is pig engine and what is its importance?
+4. What are the modes of Pig execution?
+5. What is grunt shell in Pig?
+6. What are the features of Pig Latin language?
+7. Is Pig latin commands case sensitive?
+8. What is a data flow language?
+
+
+Q1.Why Map-reduce program is needed in Pig Programming?
+Ans.Pig is a data flow language and run on two modes Local mode and Mapreduce mode ,when it runs on Mapreduce mode the pig script
+is converted into a series of Mapreduce jobs and run in Hadoop Cluster.
+
+Q2.What are advantages of pig over MapReduce?
+Ans.Pig required less development time as compair to other program.
+Pig latin is much lower cost to write and maintain then java code.
+Mapreduce does't have type system ,it gives the user flexibility to write their own data types .
+Pig provides some complex, nontrivial implementations of these standard data operations.
+
+Q3.What is pig engine and what is its importance?
+Ans.Pig provides an engine atop hadoop for executing data flows in parallel on Hadoop. It includes a
+language, Pig Latin, for expressing these data flows.
+
+
+Q4.What are the modes of Pig execution?
+Ans.Pig latin has two modes:-
+Local Mode (pig -x local)
+Mapreduce Mode (pig -x mapreduce)
+
+Q5.What is grunt shell in Pig?
+Ans.Grunt is Pig’s interactive shell. It enables users to enter Pig Latin interactively and
+provides a shell for users to interact with HDFS.
+
+Q6.What are the features of Pig Latin language?
+Ans.Pig can operate on any data whether it is relational,unstructured or nested.
+Pig is intended to be a language for parallel data processing not tied to hadoop only.
+Pig is designed to be easily controlled and modified by its users.
+Pig processes data quickly.  
+
+Q7.Is Pig latin commands case sensitive?
+Ans.yes 
+
+Q8.What is a data flow language?
+Ans.Pig Latin is a dataflow language. This means it allows users to describe how data from
+one or more inputs should be read, processed, and then stored to one or more outputs
+in parallel.It does't have any control flow construct .
