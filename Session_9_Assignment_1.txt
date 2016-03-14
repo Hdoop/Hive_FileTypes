@@ -1,0 +1,57 @@
+Q1.What is the total amount of petrol in volume sold by every distributer?
+Ans:
+pdata =load 'sample_data' Using PigStorage(',') As (Id: chararray,DistName: chararray:BuyRate: chararray,SellRate:chararray,
+VolumeOut: int ,VolumeIn: int,Year: int);
+
+group_data =group pdata by DistName;
+
+total_petrol_sold =foreach group_data generate group as DistName,SUM(pdata.VolumeOut) As TotalSale;
+
+dump total_petrol_sold;
+
+
+Q2. Which are the top 10 distributers ID's for selling petrol? Also display the amount of
+petrol sold in volume.
+Ans:
+pdata =load 'sample_data' Using PigStorage(',') As (Id: chararray,DistName: chararray:BuyRate: chararray,SellRate:chararray,
+VolumeOut: int ,VolumeIn: int,Year: int);
+
+group_data =group pdata by Id
+
+total_petrol_sold_id =foreach group_data generate group as DistName,SUM(pdata.VolumeOut) As TotalSale;
+order_desc =Order total_petrol_sold_id by TotalSale desc;
+
+top_ten =Limit order_desc 10;
+
+dump top_ten;
+Q3.List 10 years where consumption of petrol is more with the distributer id who sold it?
+Ans:
+pdata =load 'sample_data' Using PigStorage(',') As (Id: chararray,DistName: chararray:BuyRate: chararray,SellRate:chararray,
+VolumeOut: int ,VolumeIn: int,Year: int);
+
+group_data =group pdata by Year;
+
+total_petrol_sold_year =foreach group_data generate group as Year,SUM(pdata.VolumeOut) As TotalSale;
+order_desc =Order total_petrol_sold_year by TotalSale desc;
+
+top_ten_sale_year =Limit order_desc 10;
+
+dump top_ten_sale_year ;
+
+Q4.Find the distributer name who sold petrol in least amount?
+Ans:
+data =load 'sample_data' Using PigStorage(',') As (Id: chararray,DistName: chararray:BuyRate: chararray,SellRate:chararray,
+VolumeOut: int ,VolumeIn: int,Year: int);
+
+group_data =group pdata by DistName;
+
+total_petrol_sold_id =foreach group_data generate group as DistName,SUM(pdata.VolumeOut) As TotalSale;
+order_desc =Order total_petrol_sold_id by TotalSale asc;
+
+top_one =Limit order_desc 1;
+
+dump top_out;
+
+
+
+
