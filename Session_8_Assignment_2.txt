@@ -1,0 +1,70 @@
+Create a sample dataset and implement the below Pig commands on the same
+dataset.
+1) Concat
+2) Tokenize
+3) Sum
+4) Min
+5) Max
+6) Limit
+7) Store
+8) Distinct
+9) Flatten
+10) IsEmpty
+
+
+I have as sample data like ;-
+
+First_Name	Last_Name	Age	Exp	Sal	Domain
+Ravinder	Rana	30	7	50000	Software Engineer
+Neha	Rana	26	3	25000	Financial Advisor
+Rachana	Rana	25	2	35000	Doctor
+Pooja	Rana	26	2	15000	Teacher
+
+
+$ pig -x local;
+
+CONCAT:-
+ldata =load 'personal_data' As (First_Name:chararray,Last_Name:chararray,Age:int,Exp:int,Sal:int,Domain:Chararray);
+concat =foreach ldata generate CONCAT(First_Name,' ',Last_Name) as Full_Name;
+dump cancat ;
+
+TOKENIZE:-
+token =foreach concat generate FLATTEN(TOKENIZE(Full_Name)) As Flt_Token;
+
+dump token;
+
+SUM:-
+grouped =group ldata by all;
+sum =foreach grouped generate SUM(ldata.Sal) As Total_Sal;
+dump sum;
+
+MIN:-
+grouped =group ldata by all;
+min=foreach grouped generate MIN(ldata.Sal) As Min_Sal;
+dump min;
+
+
+MAX:-
+grouped =group ldata by all;
+max=foreach grouped generate MAX(ldata.Sal) As Max_Sal;
+dump max;
+
+LIMIT:-
+order =Order ldata by Sal desc;
+top1 =Limit order 1;
+
+DISTINCT:-
+unique =Distinct ldata;
+
+
+FLATTEN:-
+flatten=foreach concat generate FLATTEN(TOKENIZE(Full_Name)) As Flt_Token;
+
+dump flatten
+
+IsEmpty:-
+notempty= filter grouped by not IsEmpty(ldata);
+
+
+
+
