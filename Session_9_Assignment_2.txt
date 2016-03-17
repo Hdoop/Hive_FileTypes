@@ -1,0 +1,34 @@
+Q1.Find the number of students who scored less than 5(50%)?
+Ans:
+sample_data =load 'std_sample_data' Using PigStorage(',') As (Name: chararray,Col_Undertaken: chararray,Dob: chararray,Stream: chararray,Grade: float,State: chararray,City: chararray);
+filter_data =Filter sample_data by Grade<5;
+exp=foreach filter_data generate 1 as (RNo:int);
+grp_exp =group exp by RNo;
+std_lt_5 =foreach grp_exp generate SUM(grp_exp.RNo) As (TotalStd:int);
+Dump std_lt_5 ;
+
+Q2.List the name of students who are from Alaska?
+Ans:
+sample_data =load 'std_sample_data' Using PigStorage(',') As (Name: chararray,Col_Undertaken: chararray,Dob: chararray,Stream: chararray,Grade: float,State: chararray,City: chararray);
+filter_data =Filter sample_data by LOWER(State) =='alaksa'
+exp_name=foreach filter_data generate $0;
+
+dump exp_name;
+
+Q3.How many government collages are there in Alabama?
+Ams:
+sample_data =load 'std_sample_data' Using PigStorage(',') As (Name: chararray,Col_Undertaken: chararray,Dob: chararray,Stream: chararray,Grade: float,State: chararray,City: chararray);
+filter_data =Filter sample_data by LOWER(State) =='alabama' AND LOWER(College) ='goverenment'
+filter_grp =group filter_data by College;
+exp_college=foreach filter_grp generate COUNT(filter_data.College) as Total_Gov_College;
+
+dump exp_college;
+
+Q4.List the name of students who are from Oregon and persuing BE ?
+
+Ams:
+sample_data =load 'std_sample_data' Using PigStorage(',') As (Name: chararray,Col_Undertaken: chararray,Dob: chararray,Stream: chararray,Grade: float,State: chararray,City: chararray);
+filter_data =Filter sample_data by LOWER(State) =='oregon' AND LOWER(Stream) ='be'
+exp_ore_be=foreach filter_grp generate filter_data.Name as Total_Oregon_Be;
+
+dump exp_ore_be;
