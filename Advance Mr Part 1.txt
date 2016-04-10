@@ -1,0 +1,53 @@
+Give a brief answers to the questions below;
+Q1. What is the purpose of RecordReader in Hadoop?
+Ans:A RecordReader uses the data within the boundaries created by the input split to generate key/value pairs. 
+In the context of file-based input, the “start” is the byte position in the file where the RecordReader should start generating key/value pairs. 
+The “end” is where it should stop reading records. 
+
+Q2. What happens if the number of reducers is 0?
+And: Sorting could not tool place only the map results will shown and the job is called map only. 
+
+Q3. What is meant by Map-side and Reduce-side join in Hadoop?
+Map-Side Joins
+A map-side join the inputs to each map must be partitioned and sorted in a particular way. Each input dataset must be divided into the same number of
+partitions, and it must be sorted by the same key (the join key) in each source. All the records for a particular key must reside in the same partition.
+A map-side join can be used to join the outputs of several jobs that had the same number of reducers, the same keys, and output files that are not splittable 
+(by virtue of being smaller than an HDFS block or being gzip compressed)
+
+Reduce-Side Joins
+A reduce-side join is more general than a map-side join, in that the input datasets don’t have to be structured in any particular way, but it is less efficient 
+because both datasets have to go through the MapReduce shuffle. The basic idea is that the mapper tags each record with its source and uses the join key as 
+the map output key, so that the records with the same key are brought together in the reducer.
+
+Q4. What is the significance of conf.setMapper class?
+Ans:conf.setMapper with set the mapper class and all the stuff related to map job such has reading the data and gernerate into key- value pair. out of the mapper.
+
+Q5. Give an example scenario on the usage of counters.
+Ans:While processing information/data using MapReduce job, it is a challenge to monitor the progress of parallel threads running across nodes of distributed clusters.
+Moreover, it is also complicated to distinguish between the data that has been processed and the data which is yet to be processed. 
+The MapReduce Framework offers a provision of user-defined Counters,which can be effectively utilized to monitor the progress of data across nodes of 
+distributed clusters.
+
+Q6. Elaborate some problems which can only be solved by MapReduce and cannot
+be solved by PIG?
+Ans:
+Complex branching logic which has a lot of nested if .. else .. structures is easier and quicker to implement in Standard MapReduce, 
+for processing structured data, it also simplifies things like JOIN. Also Standard MapReduce gives you full control to minimize the number of MapReduce jobs 
+that your data processing flow requires, which translates into performance. But it requires more time to code and introduce changes.
+All those problems where we required multibranching it can't be solved by Pig UDFS help to some extinct.
+One more thing, Hive and Pig are not well suited to work with hierarchical data.
+
+
+Q7. In what kind of scenarios, MR jobs will be more useful than PIG?
+Ans:
+1.)Especially the errors that Pig produces due to UDFS(Python) are not helpful at all.
+2.)Data Schema is not enforced explicitly but implicitly.
+
+Q8. What are combiners and when are these used in a MapReduce job?
+Ans:Combiners. Advertisements. A Combiner, also known as a semi-reducer, is an optional class that operates by accepting the inputs from the Map class 
+and thereafter passing the output key-value pairs to the Reducer class. 
+The main function of a Combiner is to summarize the map output records with the same key.
+Combiner can be used just in case the reduce function is both commutative and associative. 
+It's because values are combined locally before shuffle in arbitrary order.
+
+
