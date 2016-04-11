@@ -1,0 +1,112 @@
+Give brief answers to the questions the below:
+Q1. What is the difference between TextInputFormat and KeyValueInputFormat class?
+Ans:
+The TextInputFormat class converts every row of the source file into key/value types where the BytesWritable key represents the offset of the record and the 
+Text value represents the entire record itself.
+The KeyValueTextInputFormat is an extended version of TextInputFormat , which is useful when we have to fetch every source record as Text/Text pair 
+where the key/value were populated from the record by splitting the record with a fixed delimiter.
+
+Q2. How is the splitting of file invoked in Hadoop framework?
+Ans:
+1.)Files are split into HDFS blocks and the blocks are replicated. 
+2.)Hadoop assigns a node for a split based on data locality principle. 
+3.)Hadoop will try to execute the mapper on the nodes where the block resides. Because of replication, there are multiple such nodes hosting the same block.
+In case the nodes are not available, Hadoop will try to pick a node that is closest to the node that hosts the data block. 
+It could pick another node in the same rack, for example. A node may not be available for various reasons; all the map slots may be under use or the node may 
+simply be down.
+
+Q3. Consider case scenario: In M/R system, - HDFS block size is 64 MB
+- Input format is FileInputFormat – We have 3 files of size 64K, 65Mb and 127Mb
+How many input splits will be made by Hadoop framework for each file?
+Ans:
+64K -->1, 65Mb -->2 and 127Mb -->2
+
+
+Q4. After the Map phase finishes, the Hadoop framework performs “Partitioning, Shuffle
+and sort”. Explain each event in brief.
+Q5. What is a Combiner?
+Ans:Many MapReduce jobs are limited by the bandwidth available on the cluster, so it pays to
+minimize the data transferred between map and reduce tasks. Hadoop allows the user to
+specify a combiner function to be run on the map output, and the combiner function’s
+output forms the input to the reduce function. Because the combiner function is an
+optimization, Hadoop does not provide a guarantee of how many times it will call it for a
+particular map output record, if at all. In other words, calling the combiner function zero,
+one, or many times should produce the same output from the reducer.
+
+Q6. What is Hadoop streaming?
+Hadoop streaming is a utility that comes with the Hadoop distribution. The utility allows you to create and run Map/Reduce jobs with any executable 
+or script as the mapper and/or the reducer.
+
+Q7. What are the most commonly defined input formats in Hadoop and explain each in
+brief.
+Ans:Input formats are as below
+1.)FixedLengthInputFormat, 
+2.)KeyValueTextInputFormat, 
+3.)MultiFileInputFormat, 
+4.)NLineInputFormat, 
+5.)SequenceFileInputFormat, 
+6.)TextInputFormat
+
+Multiple Inputs
+Multiple input files all of the input is interpreted by a single InputFormat and a single Mapper to use on a per-path basis.
+
+FixedLengthInputFormat
+FixedLengthInputFormat is for reading fixed-width binary records from a file, when the
+records are not separated by delimiters. The record size must be set via fixedlengthinputformat.record.length.
+
+TextInputFormat:
+TextInputFormat is the default InputFormat. Each record is a line of input. The key, a
+LongWritable, is the byte offset within the file of the beginning of the line. The value is
+the contents of the line, excluding any line terminators
+
+NLineInputFormat
+With TextInputFormat and KeyValueTextInputFormat, each mapper receives a variable
+number of lines of input. The number depends on the size of the split and the length of the
+lines. If you want your mappers to receive a fixed number of lines of input, then
+NLineInputFormat is the InputFormat to use. Like with TextInputFormat, the keys are
+the byte offsets within the file and the values are the lines themselves.
+
+SequenceFileInputFormat:
+Hadoop’s sequence file format stores sequences of binary key-value pairs. Sequence files
+are well suited as a format for MapReduce data because they are splittable (they have sync
+points so that readers can synchronize with record boundaries from an arbitrary point in
+the file, such as the start of a split), they support compression as a part of the format, and
+they can store arbitrary types using a variety of serialization frameworks.
+
+KeyValueTextInputFormat:
+TextInputFormat’s keys, being simply the offsets within the file, are not normally very
+useful. It is common for each line in a file to be a key-value pair, separated by a delimiter
+such as a tab character. For example, this is the kind of output produced by
+TextOutputFormat, Hadoop’s default OutputFormat. To interpret such files correctly,
+KeyValueTextInputFormat is appropriate.
+
+
+
+Q8. Explain what is distributed Cache in MapReduce Framework ?
+Rather than serializing side data in the job configuration, it is preferable to distribute datasets using Hadoop’s distributed cache mechanism. 
+This provides a service for copying files and archives to the task nodes in time for the tasks to use them when they run. To save network bandwidth, 
+files are normally copied to any particular node once per job.
+
+You can use the distributed cache for copying files that do not fit in memory. Hadoop map files are very useful in this
+regard, since they serve as an on-disk lookup format . Because map files are collections of files with a defined directory structure, 
+you should put them into an archive format (JAR, ZIP, tar, or gzipped tar) and add them to the cache using the -archives option.
+
+
+Q9. Explain what happens in textinputformat ?
+Ans:
+TextInputFormat is the default InputFormat. Each record is a line of input. The key, a LongWritable, is the byte offset within the file of the beginning of the line. The value is
+the contents of the line, excluding any line terminators (e.g., newline or carriage return),and is packaged as a Text object. 
+So, a file containing the following text:
+
+Hi this is Ravinder 
+Learning Bigdata Development Course.
+Soon become Bigdata development professional .
+is divided into one split of four records. The records are interpreted as the following keyvalue pairs:
+(0,Hi this is Ravinder )
+(21,Learning Bigdata Development Course.)
+(58,Soon become Bigdata development professional )
+
+
+
+
+
