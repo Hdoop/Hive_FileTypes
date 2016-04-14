@@ -1,0 +1,57 @@
+Q1. When Hive is best suited and when is it not?
+Ans:Hive is a data warehouse infrastructure tool to process structured data in Hadoop. It resides on top of Hadoop to summarize Big Data, 
+and makes querying and analyzing easy.
+It is a platform used to develop SQL type scripts to do MapReduce operations.
+It is best suited when to process structured data.
+We can't processes unstructure data,a relational data ,for OnLine Transaction Processing (OLTP),
+language for real-time queries and row-level updates.
+
+Q2. When should one use Hive over MapReduce?
+Ans:
+1.)When hadoop developers need't definite driver program control then they should make use of Hive  instead of Hadoop MapReduce.
+2.)Whenever the job does't requires implementing a custom partitioner, hadoop developers can choose Hive over MapReduce.
+3.)If the job does't requires optimization at a particular stage of processing by making the best use of tricks like in-mapper combining 
+then Hadoop MapReduce can prove to be a better coding approach over Hive.
+4.)If the job does't has some tricky usage of distributed cache (replicated join), cross products, groupings or joins then Hive is good.
+
+Q3. What is Hive metastore?
+Ans:The Hive metastore service stores the metadata for Hive tables and partitions in a relational database, 
+and provides clients (including Hive) access to this information via the metastore service API.
+
+Q4. How can Hive improve performance with orc file format tables?
+Ans:
+The ORC File (Optimized Row Columnar) format provides a more efficient way to store relational data than the RC File, 
+reducing the data storage format by up to 75% of the original. 
+The ORC file format performs better than other Hive files formats when Hive is reading, writing, and processing data. 
+Specifically compared to the RC File, ORC takes less time to access data and takes less space to store data. 
+However, the ORC file increases CPU overhead by increasing the time it takes to decompress the relational data.Also, the ORC File format comes with the 
+Hive 0.11 version and cannot be used with previous versions.
+
+Q5. What is thrift server and client, jdbc and odbc driver importance in hive?
+Ans: Hive has an optional component known as HiveServer or HiveThrift that allows access to Hive over a single port. 
+Thrift is a software framework for scalable cross-language services development. Thrift allows clients using languages including Java, C++, Ruby, and many others, to programmatically
+access Hive remotely.
+
+The Hive ODBC driver allows applications that support the ODBC protocol to connect to Hive.Like the JDBC driver, the ODBC driver uses 
+Thrift to communicate with the Hive server.
+You may alternatively choose to connect to Hive through JDBC in embedded mode using the URI jdbc:hive://. 
+In embedded mode, Hive runs in the same JVM as the application invoking it, 
+so there is no need to launch it as a standalone server, since it does not use the Thrift service or the Hive Thrift Client.
+
+
+Q6. What is the importance of partition in hive?
+Ans:
+Hive organizes tables into partitions. It is a way of dividing a table into related parts based on the values of partitioned columns such as date, city,and department. 
+Using partition, it is easy to query a portion of the data.
+7. What is the use of bucketing in hive?
+Tables or partitions are sub-divided into buckets, to provide extra structure to the data that may be used for more efficient querying. 
+Bucketing works based on the value of hash function of some column of a table.
+
+Q8. What is the difference between static partitioning and dynamic partitioning in hive? 
+Ans:Using individual insert means static and single insert to partition table means dynamic. 
+Partitions are created when data is inserted into table. Depending on how you load data you would need partitions. 
+Usually when loading files (big files) into Hive tables static partitions are preferred. That saves your time in loading data compared to dynamic partition. 
+You "statically" add a partition in table and move the file into the partition of the table. Since the files are big they are usually generated in HDFS. You can get the partition column value form the filename, day of date etc without reading the whole big file.
+Incase of dynamic partition whole big file i.e. every row of the data is read and data is partitioned through a MR job into the destination 
+tables depending on certain field in file.
+
