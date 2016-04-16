@@ -1,0 +1,78 @@
+Q1. What is the difference between memstore and hfile in HBase?
+Ans:
+1.)Memstore is kept in RS main memory, while HFiles are written to HDFS. 
+2.)Using Memstore is the need to store data on DFS ordered by row key. As HDFS is designed for sequential reads/writes, with no file modifications allowed
+3.)HBase buffers last received data in memory (in Memstore), “sorts” it before flushing, and then writes to HDFS using fast sequential writes.
+
+Q2. Describe compactions in HBase.
+Ans:Apache HBase is a distributed data store based upon a log-structured merge tree, so optimal read performance would come from having only one file per store (Column Family). 
+However, that ideal isn’t possible during periods of heavy incoming writes. 
+Instead, HBase will try to combine HFiles to reduce the maximum number of disk seeks needed for a read. This process is called compaction.
+
+Q3. List and explain the logical entities in HBase.
+Ans:
+Q4. What will happen if we do not create a row key while inserting the data?
+Ans:
+Q5. How can filters be applied in HBase and what are the benefits?
+Ans:When reading data from HBase using Get or Scan operations, you can use custom filters to return a subset of results to the client. 
+While this does not reduce server-side IO, it does reduce network bandwidth and reduces the amount of data the client needs to process. 
+Filters are generally used via the Java API, but can be used from HBase Shell for testing and debugging purposes.
+
+hbase> get 'table name', ‘rowid’, {COLUMN ? ‘column family:column name ’}
+
+
+Q6. What are the data model operations in hBase?
+Ans:
+Data Model Operations
+The four primary data model operations are Get, Put, Scan, and Delete. Operations are applied via HTable instances.
+Get
+Get returns attributes for a specified row. Gets are executed via HTable.get.
+Put
+Put either adds new rows to a table (if the key is new) or can update existing rows (if the key already exists). 
+Puts are executed via HTable.put (writeBuffer) or HTable.batch (non-writeBuffer).
+Scans
+Scan allow iteration over multiple rows for specified attributes.
+
+HTable htable = ...      // instantiate HTable
+
+Scan scan = new Scan();
+scan.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("attr"));
+scan.setStartRow( Bytes.toBytes("row"));                   // start key is inclusive
+scan.setStopRow( Bytes.toBytes("row" +  (char)0));  // stop key is exclusive
+ResultScanner rs = htable.getScanner(scan);
+try {
+  for (Result r = rs.next(); r != null; r = rs.next()) {
+  // process result...
+} finally {
+  rs.close();  // always close the ResultScanner!
+}
+Delete
+Delete removes a row from a table. Deletes are executed via HTable.delete.
+HBase does not modify data in place, and so deletes are handled by creating new markers called tombstones. 
+
+Q7. How can MapReduce be used with HBase?
+Ans:The Hadoop MapReduce framework is built to process petabytes of data, in a reliable,deterministic, yet easy-to-program way. 
+There are a variety of ways to include HBase as a source and target for MapReduce jobs.
+To run a MapReduce job that needs classes from libraries not shipped with Hadoop or the MapReduce framework, you'll need to make those libraries available 
+before the jobis executed. 
+You have two choices: static preparation of all task nodes, or supplying everything needed with the job.
+
+Static Provisioning
+It is useful to permanently install its JAR file(s) locally on the task tracker machines, that is, those machines that run the MapReduce tasks.
+This is done by doing the following:
+1. Copy the JAR files into a common location on all nodes.
+2. Add the JAR files with full location into the hadoop-env.sh configuration file, into the HADOOP_CLASSPATH variable:
+3. Restart all task trackers for the changes to be effective.
+Dynamic Provisioning
+In case you need to provide different libraries to each job you want to run, or you want to update the library versions along with your job classes, 
+then using the dynamic provisioning approach is more useful.
+
+Q8. What is regionserver?
+RegionServers are the software processes (often called daemons) you activate to store and retrieve data in HBase (Hadoop Database). 
+In production environments, each RegionServer is deployed on its own dedicated compute node. When you start using HBase, you create a table and then begin storing 
+and retrieving your data.
+However, at some point — and perhaps quite quickly in big data use cases — the table grows beyond a configurable limit.At this point, the HBase system automatically 
+splits the table and distributes the load to another RegionServer.
+In this process, often referred to as auto-sharding, HBase automatically scales as you add data to the system — a huge benefit compared to most database management 
+systems, which require manual intervention to scale the overall system beyond a single server. With HBase, as long as you have in the rack another spare server 
+that’s configured, scaling is automatic.
