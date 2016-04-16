@@ -1,0 +1,51 @@
+Give a brief elaboration of the below questions.
+1. Give a brief difference between HBASE and HDFS.
+Q2. List the main components of HBASE.
+Ans:
+In HBase, tables are split into regions and are served by the region servers. Regions are vertically divided by 
+column families into “Stores”. Stores are saved as files in HDFS. The term ‘store’ is used for regions to explain the storage structure.
+
+HBase has three major components: 
+1.)the client library, 
+2.)a master server, 
+3.)and region servers. 
+
+Region servers can be added or removed as per requirement.
+
+Q3. Does Hbase support sql?
+Ans:No
+Q4. When should we use HBASE, list some of the scenarios for the same.
+Ans:
+If your application has a variable schema where each row is slightly different, then you should look at HBase. 
+As an example, doing a modeling exercise using a standard relational schema; When you can’t add columns fast enough and most of them are NULL in each row, 
+you should consider HBase. 
+If you find that your data is stored in collections, for example some meta data, message data or binary data that is all keyed on 
+the same value, then you should consider HBase. 
+If you need key based access to data when storing or retrieving, then you should consider HBase
+5. What are the different modes in which Hbase can be run?
+Ans:Standalone and Distributed
+Standalone HBase
+This is the default mode. In standalone mode, HBase does not use HDFS -- it uses the local filesystem instead -- and it runs all HBase daemons 
+and a local ZooKeeper all up in the same JVM. Zookeeper binds to a well known port so clients may talk to HBase.
+
+Distributed
+Distributed mode can be subdivided into distributed but all daemons run on a single node 
+pseudo-distributed-- and fully-distributed where the daemons are spread across all nodes in the cluster .
+Distributed modes require an instance of the Hadoop Distributed File System (HDFS).Before proceeding, ensure you have an appropriate, working HDFS.
+
+Q6. Why is zookeeper needed in Hbase?
+Ans:
+HBase uses ZooKeeper for various distributed coordination services such as master election. As HBase develops and grows it continues to rely on ZooKeeper 
+for additional functionality, making it a key part of the system.
+Q8 Hbase is a schema less database, what does it mean?
+Ans:
+Q9 What is the minimum number of column family every Hbase table should have?
+Ans:One.
+Q10 What is the benefit of using connection pool in Hbase?
+Ans:Connections are internally keyed by the configuration instance, you need to provide that instance to close the associated connection. The boolean stop
+Proxy parameter lets you further enforce the cleanup of the entire RPC stack of the client—which is its umbilical cord to the remote servers. 
+Only use true when you do not need any further communication with the server to take place.The deleteAllConnections() call only requires the boolean stopProxy flag; 
+it simply iterates over the entire list of shared connections known to the connection manager and closes them.
+Connection manager is responsible for managing connection .
+
+
