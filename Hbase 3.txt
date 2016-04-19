@@ -1,0 +1,97 @@
+Use Hbase shell for performing the following operations
+1. Create the table customer with two column families
+	1.1 Personal details and order details as column families
+	1.2 Create a unique number as row key (ssn/Adhar no.,etc)
+	1.3 Insert at least 10 records to each column
+	1.4 Insert following values for personal details column family
+		Name, age, city, state
+	1.5 Insert following values for order details column family
+		Order no., order quantity, and order amount
+	1.6 Use put command to insert the values for each record.
+	1.7 Use get command, to retrieve all the records of single customer.
+
+
+create 'customer' 'AdharNo','Personal_Details','Order_Details'
+
+--Column Family Personal_Details
+
+put 'customer', 'A-1010','Personal_Details:Name','Ravinder'
+put 'customer', 'A-1010','Personal_Details:Age',30
+put 'customer', 'A-1010','Personal_Details:City','Jammu'
+put 'customer', 'A-1010','Personal_Details:State','J&K'
+
+put 'customer', 'A-1011','Personal_Details:Name','Taj Pal Singh'
+put 'customer', 'A-1011','Personal_Details:Age',50
+put 'customer', 'A-1011','Personal_Details:City','Punjab'
+put 'customer', 'A-1011','Personal_Details:State','Punjab'
+
+put 'customer', 'A-1012','Personal_Details:Name','Karnal Singh'
+put 'customer', 'A-1012','Personal_Details:Age',30
+put 'customer', 'A-1012','Personal_Details:City','Punjab'
+put 'customer', 'A-1012','Personal_Details:State','Punjab'
+
+
+put 'customer', 'A-1014','Personal_Details:Name','Novjat Singh'
+put 'customer', 'A-1014','Personal_Details:Age',30
+put 'customer', 'A-1014','Personal_Details:City','Punjab'
+put 'customer', 'A-1014','Personal_Details:State','Punjab'
+
+
+put 'customer', 'A-1013','Personal_Details:Name','Harpal Singh'
+put 'customer', 'A-1013','Personal_Details:Age',30
+put 'customer', 'A-1013','Personal_Details:City','Punjab'
+put 'customer', 'A-1013','Personal_Details:State','Punjab'
+
+put 'customer', 'A-1015','Personal_Details:Name','Gurjeet Singh'
+put 'customer', 'A-1015','Personal_Details:Age',51
+put 'customer', 'A-1015','Personal_Details:City','Punjab'
+put 'customer', 'A-1015','Personal_Details:State','Punjab'
+
+put 'customer', 'A-1016','Personal_Details:Name','Ravinder'
+put 'customer', 'A-1016','Personal_Details:Age',30
+put 'customer', 'A-1016','Personal_Details:City','Jammu'
+put 'customer', 'A-1016','Personal_Details:State','J&K'
+
+put 'customer', 'A-1017','Personal_Details:Name','Taj Pal Singh'
+put 'customer', 'A-1017','Personal_Details:Age',50
+put 'customer', 'A-1017','Personal_Details:City','Punjab'
+put 'customer', 'A-1017','Personal_Details:State','Punjab'
+
+put 'customer', 'A-1018','Personal_Details:Name','Karnal Singh'
+put 'customer', 'A-1018','Personal_Details:Age',30
+put 'customer', 'A-1018','Personal_Details:City','Punjab'
+put 'customer', 'A-1018','Personal_Details:State','Punjab'
+
+put 'customer', 'A-1019','Personal_Details:Name','Harpal Singh'
+put 'customer', 'A-1019','Personal_Details:Age',30
+put 'customer', 'A-1019','Personal_Details:City','Punjab'
+put 'customer', 'A-1019','Personal_Details:State','Punjab'
+
+put 'customer', 'A-1015','Personal_Details:Name','Gurjeet Singh'
+put 'customer', 'A-1015','Personal_Details:Age',51
+put 'customer', 'A-1015','Personal_Details:City','Punjab'
+put 'customer', 'A-1015','Personal_Details:State','Punjab'
+
+
+--Column Family Order_Details
+
+put 'customer', 'A-1010','Order_Details:OrderNo','1001'
+put 'customer', 'A-1010','Order_Details:Qty',30
+put 'customer', 'A-1010','Order_Details:Amount',2000
+
+put 'customer', 'A-1011','Order_Details:OrderNo','1002'
+put 'customer', 'A-1011','Order_Details:Qty',30
+put 'customer', 'A-1011','Order_Details:Amount',2000
+
+
+put 'customer', 'A-1012','Order_Details:OrderNo','1003'
+put 'customer', 'A-1012','Order_Details:Qty',30
+put 'customer', 'A-1012','Order_Details:Amount',5000
+
+
+put 'customer', 'A-1013','Order_Details:OrderNo','1004'
+put 'customer', 'A-1013','Order_Details:Qty',10
+put 'customer', 'A-1013','Order_Details:Amount',3000
+
+
+get 'customer', 'A-1010'
