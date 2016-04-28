@@ -1,0 +1,2 @@
+flume-ng agent –n agent1 –f /usr/local/flume/conf/AcadgildLocal.conf
+

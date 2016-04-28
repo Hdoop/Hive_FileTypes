@@ -1,0 +1,78 @@
+sudo service mysqld start
+mysql -u root
+
+create database db1;
+
+use db1;
+
+create table company
+(
+name varchar(20),
+location varchar(20)
+);
+
+Create table Problem_Statement1
+(
+District_Name varchar(100),
+Result varchar(20)
+)
+
+Create table Problem_Statement2
+(
+District_Name varchar(100),
+Result varchar(20)
+)
+
+
+Create table Progress(
+State_Name varchar(50),
+District_Name varchar(50), 
+Project_Objectives_IHHL_BPL int ,
+Project_Objectives_IHHL_APL int ,
+Project_Objectives_IHHL_TOTAL int,
+Project_Objectives_SCW int ,
+Project_Objectives_School_Toilets int ,
+Project_Objectives_Anganwadi_Toilets int,
+Project_Objectives_RSM int ,
+Project_Objectives_PC int ,
+Project_Performance_IHHL_BPL int ,
+Project_Performance_IHHL_APL int ,
+Project_Performance_IHHL_TOTAL int ,
+Project_Performance_SCW int ,
+Project_Performance_School_Toilets int ,
+Project_Performance_Anganwadi_Toilets int ,
+Project_Performance_RSM int ,
+Project_Performance_PC int
+)
+sqoop export --connect jdbc:mysql://localhost/ProjectI --username 'root' -P --table 'Progress' --export-dir '/pigout' --input-fields-terminated-by '\t' -m 1
+
+sqoop export --connect jdbc:mysql://localhost/ProjectI --username 'root' -P --table 'Problem_Statement1' --export-dir '/Problem_Statement1' --input-fields-terminated-by ',' -m 1
+
+sqoop export --connect jdbc:mysql://localhost/ProjectI --username 'root' -P --table 'Problem_Statement2' --export-dir '/Problem_Statement2' --input-fields-terminated-by ',' -m 1
+
+insert into company values('acadgild','Bangalore');
+
+insert into company values('eduvista','Walnut');
+
+insert into company values('eduvista','Bangalore');
+
+grant all on *.* to 'root'@'localhost' with grant option;
+
+flush privileges;
+
+commit;
+
+exit;
+
+hadoop fs -ls /sqoopout
+
+sqoop import --connect jdbc:mysql://localhost/db1 --username 'root' -P --table 'company' --target-dir '/sqoopout' -m 1;
+
+mysql -u root
+
+use db1;
+delete from customer;
+commit;
+
+sqoop export --connect jdbc:mysql://localhost/ProjectI --username 'root' -P --table 'Progress' --export-dir '/pintout' --input-fields-terminated-by ',' -m 1
+
